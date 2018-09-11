@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+			div#output {
+				border: 1px solid lightgray;
+				border-radius: 2px;
+				min-height: 10em;
+				padding: 0.5em;
+			}
+			#input {
+				min-height: 10em;
+				width: calc(100% - 1em);
+				padding: 0.5em;
+			}
+		</style>
+	</head>
+	<body>
+		<form>
+			<textarea id="input" autofocus ></textarea>
+			<div id="output"></div>
+			<button id="copy" class="copy">Copy HTML to clipboard</button>
+		</form>
+		<script type="text/javascript" src="furigana.js"></script>
+	</body>
+</html>
