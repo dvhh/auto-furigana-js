@@ -11,17 +11,56 @@
 		document.execCommand('copy');
 		document.body.removeChild(el);
 	};
-	let copyElement = document
-		.getElementById("copy")
-		.addEventListener('click',
-			event => {
-				let outputElement = document.getElementById("output");
-				let data = outputElement.innerHTML;
-				copyToClipboard(data);
-				event.preventDefault();
-				return false;
+
+	document
+	.getElementById("copy")
+	.addEventListener('click',
+		event => {
+			let outputElement = document.getElementById("output");
+			let data = outputElement.innerHTML;
+			copyToClipboard(data);
+			event.preventDefault();
+			return false;
+		}
+	);
+
+	const rubyClickHandler = event => {
+		//console.log(event);
+		document.title = "";
+		let target = event.target
+		if(target.tagName == "RUBY") {
+			target = target.children[1];
+		}
+		console.log(target);
+		console.log(target.parentNode.firstChild.data);
+		if(target.tagName != "RT") {
+			return;
+		}
+		const kanji=target.parentNode.firstChild.data;
+		const current = target.textContent;
+		//document.title = current;
+		const replacement = window.prompt(kanji,current);
+		target.textContent = replacement;
+	}
+
+	const clearRubyElements = (elements, handler) => {
+		for(let i = 0; i < elements.length; ++i ) {
+			let element = elements[i];
+			if(element.tagName == "RUBY") {
+				element.removeEventListener("click", handler);
 			}
-		);
+		}
+	};
+
+	const addElementListener = (elements, handler) => {
+		for(let i = 0; i < elements.length; ++i ) {
+			let element = elements[i];
+			if(element.tagName == "RUBY") {
+				element.addEventListener("click", handler);
+			}
+		}
+	};
+
 	fetch(new Request('kanjidic2.json'))
 		.then( response => response.json() )
 		.then( dictionary => { 
@@ -61,8 +100,10 @@
 					if( output != "" ) {
 						html += "<ruby>" + output + "<rp>(</rp><rt>" + outputFurigana + "</rt><rp>)</rp></ruby>";
 					}
-
+					clearRubyElements(outputElement.children, rubyClickHandler);
 					outputElement.innerHTML = html;
+					addElementListener(outputElement.children,rubyClickHandler);
+					
 				}
 			);
 			console.log("loaded");

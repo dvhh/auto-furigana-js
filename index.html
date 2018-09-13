@@ -14,6 +14,22 @@
 				width: calc(100% - 1em);
 				padding: 0.5em;
 			}
+
+			ruby {
+				cursor: pointer;
+			}
+
+			ruby:hover {
+				background-color: lightgray;
+			}
+
+			div#correction {
+				border: 1px solid lightgray;
+				padding: 0.5em;
+				position: absolute;
+				border-radius: 2px;
+
+			}
 		</style>
 	</head>
 	<body>
@@ -23,5 +39,9 @@
 			<button id="copy" class="copy">Copy HTML to clipboard</button>
 		</form>
 		<script type="text/javascript" src="furigana.js"></script>
+		<div id="correction" >
+			<div id="kanjiPlaceholder"></div>
+
+		</div>
 	</body>
 </html>
